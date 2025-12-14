@@ -19,18 +19,17 @@ export function PricingCalculator() {
   const overhead = 0.3
   const margin = 0.3
 
-  // Staff breakdown para SSA
-  const staffAux = 8 // Auxiliares de rampa e limpeza
-  const staffOperador = 4 // Operadores
-  const staffLider = 2 // Líderes
-  const totalStaff = staffAux + staffOperador + staffLider
+  const staffAux = 28 // Auxiliares de rampa e limpeza
+  const staffOperador = 12 // Operadores
+  const staffLider = 6 // Líderes
+  const totalStaff = staffAux + staffOperador + staffLider // 46 total
 
   const staffCostBase = staffAux * staffAuxCost + staffOperador * staffOperadorCost + staffLider * staffLiderCost
   const pcdCost = includePCD ? staffCostBase * 0.05 : 0
   const admCost = includeAdm ? staffCostBase * 0.03 : 0
   const totalStaffCost = staffCostBase + pcdCost + admCost
 
-  const gseBarrasEmbraer = 2 // Barras de reboque Embraer
+  const gseBarrasEmbraer = 3 // Barras de reboque Embraer (increased for simultaneity)
   const gseCostPerUnit = 4500
   const totalGSECost = gseBarrasEmbraer * gseCostPerUnit
 

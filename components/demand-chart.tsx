@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Line, LineChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Legend } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { Line, LineChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Legend, Tooltip } from "recharts"
+import { ChartContainer } from "@/components/ui/chart"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const rampaData = [
@@ -93,6 +93,22 @@ export function DemandChart() {
 
   const data = resourceType === "rampa" ? rampaData : resourceType === "limpeza" ? limpezaData : gseData
 
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="rounded-lg border bg-background p-3 shadow-md">
+          <p className="mb-2 text-sm font-medium">{label}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={index} className="text-sm" style={{ color: entry.color }}>
+              {entry.name}: {entry.value}
+            </p>
+          ))}
+        </div>
+      )
+    }
+    return null
+  }
+
   return (
     <div className="space-y-4">
       <div className="flex justify-end">
@@ -114,7 +130,7 @@ export function DemandChart() {
             <CartesianGrid strokeDasharray="3 3" stroke={COLORS.grid} opacity={0.5} />
             <XAxis dataKey="hour" stroke={COLORS.text} fontSize={11} tickLine={false} axisLine={false} />
             <YAxis stroke={COLORS.text} fontSize={11} tickLine={false} axisLine={false} />
-            <ChartTooltip content={<ChartTooltipContent />} />
+            <Tooltip content={<CustomTooltip />} />
             <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "10px" }} iconType="line" />
             <Line
               type="monotone"

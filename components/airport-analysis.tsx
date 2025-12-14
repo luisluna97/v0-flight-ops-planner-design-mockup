@@ -13,16 +13,16 @@ import { Calculator, TrendingUp, LayoutDashboard } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
+const airportNames: Record<string, string> = {
+  ssa: "SSA - Salvador",
+  gru: "GRU - São Paulo",
+  gig: "GIG - Rio de Janeiro",
+  bsb: "BSB - Brasília",
+}
+
 export function AirportAnalysis() {
   const { t } = useI18n()
   const [selectedAirport, setSelectedAirport] = useState("ssa")
-
-  const airportNames = {
-    ssa: "SSA - Salvador",
-    gru: "GRU - São Paulo",
-    gig: "GIG - Rio de Janeiro",
-    bsb: "BSB - Brasília",
-  }
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -30,11 +30,7 @@ export function AirportAnalysis() {
       <aside className="w-64 border-r border-border bg-card">
         <div className="p-6">
           <div className="flex items-center gap-3 mb-8">
-            <img
-              src="/images/design-mode/FOPLOGO.png"
-              alt="FOP Logo"
-              className="h-10 w-auto"
-            />
+            <img src="/fop-logo.png" alt="FOP Logo" className="h-10 w-auto" />
           </div>
 
           <nav className="space-y-1">
@@ -65,7 +61,7 @@ export function AirportAnalysis() {
           <div className="px-8 py-4 flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-semibold text-foreground">
-                {t("analysis.title")} - {airportNames[selectedAirport as keyof typeof airportNames]}
+                {t("analysis.title")} - {airportNames[selectedAirport]}
               </h1>
               <p className="text-sm text-muted-foreground mt-1">{t("analysis.subtitle")}</p>
             </div>

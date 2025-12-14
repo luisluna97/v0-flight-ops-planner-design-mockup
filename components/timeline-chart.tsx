@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts"
+import { ChartContainer } from "@/components/ui/chart"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const rampaData = [
@@ -76,6 +76,29 @@ const chartConfig = {
   },
 }
 
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="rounded-lg border bg-background p-2 shadow-sm">
+        <div className="grid gap-2">
+          <div className="flex flex-col">
+            <span className="text-[0.70rem] uppercase text-muted-foreground">{payload[0].payload.hour}</span>
+          </div>
+          {payload.map((entry: any, index: number) => (
+            <div key={index} className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full" style={{ backgroundColor: entry.color }} />
+              <span className="text-sm font-medium">
+                {entry.dataKey === "current" ? "Operação Atual" : "Novo Cliente"}: {entry.value}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+  return null
+}
+
 export function TimelineChart() {
   const [serviceType, setServiceType] = useState<"rampa" | "limpeza" | "gse">("rampa")
 
@@ -118,7 +141,7 @@ export function TimelineChart() {
               axisLine={false}
             />
             <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
-            <ChartTooltip content={<ChartTooltipContent />} />
+            <Tooltip content={<CustomTooltip />} />
             <Area
               type="monotone"
               dataKey="current"
